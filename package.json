@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@hebcal/core": "^5.8.2",
+    "express": "^4.21.1",
+    "hebcal": "^2.3.2"
+  },
+  "name": "halacha-times-display",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
