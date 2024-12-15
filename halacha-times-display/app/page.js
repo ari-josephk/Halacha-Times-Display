@@ -1,19 +1,19 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import yomevents from "./yomevents";
+import Sidebar from './sidebar';
+import getYomEvents from "./yomevents";
+
+const backgroundImage = "/path/to/your/image.jpg";
 
 export default function Home() {
+  return App()
+}
+
+async function App() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <ol>
-          {yomevents.map(e => {
-            return (
-              <li>{(e.getEmoji() || '') + '   ' + e.render()}</li>
-            )
-          })}
-        </ol>
-      </main>
+    <div className={styles.app}>
+      <div className={styles.background_image}></div>
+      <Sidebar elements={await getYomEvents()} />
     </div>
   );
 }
