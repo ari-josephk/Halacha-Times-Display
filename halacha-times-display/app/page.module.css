@@ -76,11 +76,41 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
+  color: rgba(0, 0, 0, 0.8)
 }
 
 .capsule span {
   margin-left: 10px;
-  font-weight: bold;
+}
+
+.dateNotifier {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.80); /* Adjusted text color for better blending */
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin: 20px 0 10px 0; /* Increased top margin */
+  box-shadow: none;
+  position: relative;
+}
+
+.dateNotifier::before,
+.dateNotifier::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Adjust position to avoid overlap */
+  width: calc(50% - 100px); /* Adjust width as needed */
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5); /* Line color */
+}
+
+.dateNotifier::before {
+  left: 0;
+}
+
+.dateNotifier::after {
+  right: 0;
 }
 
 .main {
@@ -88,6 +118,7 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  font-variant: small-caps;
 }
 
 .main ol {
