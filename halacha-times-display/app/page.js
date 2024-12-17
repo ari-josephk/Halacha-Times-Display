@@ -2,8 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import getYomEvents from "./yomevents";
-
-const backgroundImage = "/path/to/your/image.jpg";
+import Background from "./background";
 
 export default function Home() {
   return App()
@@ -12,7 +11,7 @@ export default function Home() {
 async function App() {
   return (
     <div className={styles.app}>
-      <div className={styles.background_image}></div>
+      <Background />
       <Sidebar elements={await getYomEvents()} />
     </div>
   );
