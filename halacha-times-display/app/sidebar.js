@@ -1,7 +1,14 @@
 import styles from "./page.module.css";
 import { Fragment } from "react";
 
-const Sidebar = ({ elements: dateMap }) => {
+/**
+ * Sidebar component that displays a list of events for given dates.
+ *
+ * @param {Object} props - The component props.
+ * @param {Map} props.dateMap - A map where keys are date objects and values are arrays of event objects.
+ * @returns {JSX.Element} The rendered sidebar component.
+ */
+const Sidebar = ({ dateMap }) => {
   const hasEvents = [...dateMap.values()].some(events => events.length > 0);
 
   return (

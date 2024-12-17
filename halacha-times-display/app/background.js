@@ -8,16 +8,25 @@ const getRandomImage = images => {
 	return images[randomIndex];
 };
 
-const Background = elements => {
-	const [image, setImage] = useState(getRandomImage(elements.images));
+/**
+ * Background component that displays a random image from a list of images and reloads it at specified intervals.
+ *
+ * @param {Object} props - The properties object.
+ * @param {string[]} props.images - An array of image URLs to display.
+ * @param {number} props.reloadMinutes - The interval in minutes at which to reload the image.
+ *
+ * @returns {JSX.Element} The JSX element representing the background image.
+ */
+const Background = ({ images, reloadMinutes }) => {
+	const [image, setImage] = useState(getRandomImage(images));
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setImage(getRandomImage(elements.images));
-		}, elements.reloadMinutes * 60 * 1000); // 5 minutes in milliseconds
+			setImage(getRandomImage(images));
+		}, reloadMinutes * 60 * 1000); // 5 minutes in milliseconds
 
 		return () => clearInterval(interval);
-	}, [elements.images]);
+	}, [images]);
 
 	return (
 		<img src={image} className={styles.background_image} />
