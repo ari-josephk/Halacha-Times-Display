@@ -10,7 +10,7 @@ const Sidebar = ({ elements: dateMap }) => {
         <ul>
           {[...dateMap.keys()].map(d => (
             dateMap.get(d).length > 0 && (
-              <Fragment key={d}>
+              <Fragment key={d.abs()}>
                 <li className={styles.dateNotifier}>{d.render()}</li>
                 {dateMap.get(d).map(e => (
                   <li className={styles.capsule} key={e.id}>

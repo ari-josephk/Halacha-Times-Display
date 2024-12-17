@@ -1,19 +1,26 @@
+"use client";
+
 import styles from "./page.module.css";
-import fs from 'fs';
-import path from 'path';
+import { useEffect, useState } from "react";
 
-const imagesDirectory = path.join(process.cwd(), 'public/images');
-
-const images = fs.readdirSync(imagesDirectory).map(file => `/images/${file}`);
-
-const getRandomImage = () => {
+const getRandomImage = images => {
 	const randomIndex = Math.floor(Math.random() * images.length);
 	return images[randomIndex];
 };
 
-const Background = () => {
+const Background = elements => {
+	const [image, setImage] = useState(getRandomImage(elements.images));
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setImage(getRandomImage(elements.images));
+		}, elements.reloadMinutes * 60 * 1000); // 5 minutes in milliseconds
+
+		return () => clearInterval(interval);
+	}, [elements.images]);
+
 	return (
-		<img src={getRandomImage()} className={styles.background_image} />
+		<img src={image} className={styles.background_image} />
 	);
 };
 
