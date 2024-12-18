@@ -1,9 +1,10 @@
 import { HebrewCalendar, HDate, Location, Event } from '@hebcal/core'
 import fetch from 'node-fetch';
 
-async function getYomEvents() {
-  const clientLocation = await getClientLocationFromIP();
-  var hebDates = [...Array(7).keys()].map(i => new HDate(new Date()).add(i - 1, 'd'))
+async function getYomEvents(cityOverride) {
+  const clientLocation = Location.lookup(cityOverride || 'NONE') || await getClientLocationFromIP();
+
+  const hebDates = [...Array(7).keys()].map(i => new HDate(new Date()).add(i - 1, 'd'))
 
   const options = {
     year: hebDates[0].getFullYear(),

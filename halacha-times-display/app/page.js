@@ -3,12 +3,14 @@ import Sidebar from './sidebar';
 import getYomEvents from "./scripts/yomevents";
 import Background from "./background";
 import images  from "./scripts/compilebackgrounds";
+import config from '../config.json';
 
 export default function Home() {
   return App()
 }
 
-const RELOAD_MINUTES = 10;
+const RELOAD_MINUTES = config.backgroundRotateMinutes || 5;
+const CITY = config.cityOverride;
 
 /**
  * The main application component.
@@ -23,7 +25,7 @@ async function App() {
   return (
     <div className={styles.app}>
       <Background images={images} reloadMinutes={RELOAD_MINUTES} />
-      <Sidebar dateMap={await getYomEvents()} />
+      <Sidebar dateMap={await getYomEvents(CITY)} />
     </div>
   );
 }
