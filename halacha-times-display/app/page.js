@@ -1,16 +1,14 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation'
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
-import getYomEvents from "./scripts/yomevents";
 import Background from "./background";
-import images  from "./scripts/compilebackgrounds";
-import config from '../config.json';
+
 
 export default function Home() {
   return App()
 }
-
-const RELOAD_MINUTES = config.backgroundRotateMinutes || 5;
-const CITY = config.cityOverride;
 
 /**
  * The main application component.
@@ -22,10 +20,17 @@ const CITY = config.cityOverride;
  * @returns {JSX.Element} The rendered application component.
  */
 async function App() {
+  const params = useSearchParams();
+  console.log(params)
+  const CITY_OVERRIDE = params.get('city');
+  const RELOAD_MINUTES = params.get('backgroundReloadMinutes');
+
+  const images = await fetch('./backgrounds');
+  const events = await fetch(`./events?city=${CITY_OVERRIDE}`);
   return (
     <div className={styles.app}>
       <Background images={images} reloadMinutes={RELOAD_MINUTES} />
-      <Sidebar dateMap={await getYomEvents(CITY)} />
+      <Sidebar dateMap={events} />
     </div>
   );
 }

@@ -1,9 +1,6 @@
-import { HebrewCalendar, HDate, Location, Event } from '@hebcal/core'
-import fetch from 'node-fetch';
+import { HebrewCalendar, HDate} from '@hebcal/core'
 
-async function getYomEvents(cityOverride) {
-  const clientLocation = Location.lookup(cityOverride || 'NONE') || await getClientLocationFromIP();
-
+async function getYomEvents(clientLocation) {
   const hebDates = [...Array(7).keys()].map(i => new HDate(new Date()).add(i - 1, 'd'))
 
   const options = {
@@ -20,12 +17,6 @@ async function getYomEvents(cityOverride) {
   const events = HebrewCalendar.calendar(options).filter(e => hebDates.some(d => d.isSameDate(e.date)));
 
   return new Map(hebDates.map(d => [d, events.filter(e => d.isSameDate(e.date))]));
-}
-
-async function getClientLocationFromIP() {
-  const response = await fetch('https://ipapi.co/json/');
-  const data = await response.json();
-  return new Location(data.latitude, data.longitude, data.country === 'IL', data.timezone, data.city);
 }
 
 export default getYomEvents;
