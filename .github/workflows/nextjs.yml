@@ -43,13 +43,13 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+      - name: Enter Webapp Directory
+        run: echo "${{ github.workspace }}/halacha-times-display" >> $GITHUB_WORKSPACE
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-        run: |
-          cd "${{ github.workspace }}/halacha-times-display"
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -68,22 +68,14 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-        run: |
-          cd "${{ github.workspace }}/halacha-times-display"
       - name: Install dependencies
-        run: |
-          cd "${{ github.workspace }}/halacha-times-display"
-          ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        run: |
-          cd "${{ github.workspace }}/halacha-times-display"
-          ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-        run: |
-          cd "${{ github.workspace }}/halacha-times-display"
 
   # Deployment job
   deploy:
