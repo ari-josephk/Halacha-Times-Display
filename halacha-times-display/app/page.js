@@ -3,13 +3,14 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
+import { Suspense } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
 
 
 export default function Home() {
-  return App()
+  return (<Suspense fallback={null}><App /></Suspense>)
 }
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
@@ -41,7 +42,7 @@ function App() {
   if (error) return (<div className={styles.app}>Failed to load location</div>);
 
   if (!events || !images) return (<div className={styles.app}>Loading...</div>);
-  
+
   return (
     <div className={styles.app}>
       <Background images={images} reloadMinutes={RELOAD_MINUTES} />
