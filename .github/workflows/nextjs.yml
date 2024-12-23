@@ -46,11 +46,13 @@ jobs:
       - name: Enter Webapp Directory
         run: echo "${{ github.workspace }}/halacha-times-display" >> $GITHUB_WORKSPACE
       - name: Setup Node
+        working-directory: ./halacha-times-display
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
+        working-directory: ./halacha-times-display
         uses: actions/configure-pages@v5
         with:
           # Automatically inject basePath in your Next.js configuration file and disable
@@ -59,6 +61,7 @@ jobs:
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
       - name: Restore cache
+        working-directory: ./halacha-times-display
         uses: actions/cache@v4
         with:
           path: |
@@ -69,10 +72,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
+        working-directory: ./halacha-times-display
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
+        working-directory: ./halacha-times-display
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
+        working-directory: ./halacha-times-display
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
