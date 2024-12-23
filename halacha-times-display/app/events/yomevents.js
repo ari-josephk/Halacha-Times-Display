@@ -16,7 +16,9 @@ async function getYomEvents(clientLocation) {
 
   const events = HebrewCalendar.calendar(options).filter(e => hebDates.some(d => d.isSameDate(e.date)));
 
-  return new Map(hebDates.map(d => [d, events.filter(e => d.isSameDate(e.date))]));
+  const eventsMap = new Map(hebDates.map(d => [d, events.filter(e => d.isSameDate(e.date)).map(e => `${e.getEmoji() || ''} ${e.render()}`)]));
+
+  return Object.fromEntries(eventsMap);
 }
 
 export default getYomEvents;

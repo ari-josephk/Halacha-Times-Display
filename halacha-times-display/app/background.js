@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 
 const getRandomImage = images => {
+	if (!images || images.length === 0) return null;
+
 	const randomIndex = Math.floor(Math.random() * images.length);
 	return images[randomIndex];
 };

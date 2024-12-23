@@ -1,17 +1,26 @@
 import getYomEvents from "./yomevents";
 import { Location } from "@hebcal/core";
+const { find } = require('geo-tz')
 
 export const GET = async (req) => {
-	const forwarded = req.headers["x-forwarded-for"]
-  const clientIP = forwarded ? forwarded.split(/, /)[0] : '127.0.0.1'
 	const cityOverride = req.nextUrl.searchParams.get('city');
 
-	const clientLocation = Location.lookup(cityOverride || 'NONE') || await getClientLocationFromIP(clientIP);
-	return getYomEvents(clientLocation);
-};
+	let clientLocation;
+	if (cityOverride) clientLocation = Location.lookup(cityOverride);
+	
+	if (!clientLocation) {
+		try {
+			const latitude = req.nextUrl.searchParams.get('lat');
+			const longitude = req.nextUrl.searchParams.get('lon');
+			const timezone = find(latitude, longitude)[0];
+			const country = timezone.split('/')[0];
 
-async function getClientLocationFromIP(ip) {
-  const response = await fetch(`https://ipapi.co/${ip}/json/`);
-  const data = await response.json();
-  return new Location(data.latitude, data.longitude, data.country === 'IL', data.timezone, data.city);
+			clientLocation = new Location(latitude, longitude, country === 'Israel', timezone);
+		} catch (e) {
+			console.log(e);
+			Response.error('Invalid location');
+		}
+	}
+
+	return Response.json(await getYomEvents(clientLocation));
 };

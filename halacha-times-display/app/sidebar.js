@@ -17,13 +17,11 @@ const Sidebar = ({ dateMap }) => {
         <ul>
           {[...dateMap.keys()].map(d => (
             dateMap.get(d).length > 0 && (
-              <Fragment key={d.abs()}>
-                <li className={styles.dateNotifier}>{d.render()}</li>
+              <Fragment key={d}>
+                <li className={styles.dateNotifier}>{d}</li>
                 {dateMap.get(d).map(e => (
                   <li className={styles.capsule} key={e.id}>
-                    <span>{e.getEmoji()}</span>
-                    <span>{e.observedIn()}</span>
-                    <span>{e.render()}</span>
+                    <span>{e}</span>
                   </li>
                 ))}
               </Fragment>
