@@ -29,7 +29,7 @@ function App() {
   const CITY_OVERRIDE = params.get('city');
   const RELOAD_MINUTES = params.get('backgroundReloadMinutes') || 10;
 
-  const { coords } = useGeolocated();
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated();
 
   let eventUrl;
   if (coords) eventUrl = `./events?lat=${coords.latitude}&lon=${coords.longitude}&city=${CITY_OVERRIDE}`;
@@ -39,9 +39,13 @@ function App() {
 
   const { data: images } = useSWR('./backgrounds', fetcher);
 
-  if (error) return (<div className={styles.app}>Failed to load location</div>);
+  if (!isGeolocationEnabled && !CITY_OVERRIDE) return (<div className={styles.app}>Geolocation is disabled and location was not provided. Please enable geolocation.</div>);
+
+  if (!isGeolocationAvailable && !CITY_OVERRIDE) return (<div className={styles.app}>Geolocation not available and location was not provided. Please choose a location or city.</div>);
 
   if (!events || !images) return (<div className={styles.app}>Loading...</div>);
+
+  if (error) return (<div className={styles.app}>Failed to load calendar.</div>);
 
   return (
     <div className={styles.app}>

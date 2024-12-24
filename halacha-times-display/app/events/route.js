@@ -17,8 +17,8 @@ export const GET = async (req) => {
 
 			clientLocation = new Location(latitude, longitude, country === 'Israel', timezone);
 		} catch (e) {
-			console.log(e);
-			Response.error('Invalid location');
+			console.warn('Failed to get location - search parameters ' + req.nextUrl.searchParams, e);
+			Response.json({})
 		}
 	}
 
