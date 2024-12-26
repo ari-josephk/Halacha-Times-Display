@@ -13,7 +13,9 @@ export default function Home() {
   return (<Suspense fallback={null}><App /></Suspense>)
 }
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+const EVENT_RELOAD_MINUTES = 360; // 6 hours
 
 /**
  * The main application component.
