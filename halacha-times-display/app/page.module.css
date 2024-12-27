@@ -55,12 +55,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scrollbar-width: none; /* For Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  padding-top: 56px;
 }
 
 .sidebar li {

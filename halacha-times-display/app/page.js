@@ -3,7 +3,7 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
-import { Suspense } from "react"
+import { Suspense, useState, useEffect } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
@@ -37,7 +37,20 @@ function App() {
   if (coords) eventUrl = `./events?lat=${coords.latitude}&lon=${coords.longitude}&city=${CITY_OVERRIDE}`;
   else eventUrl = `./events?city=${CITY_OVERRIDE}`;
 
-  const { data: events, error } = useSWR(eventUrl, fetcher);
+  let [events, setEvents] = useState({});
+  let [error, setError] = useState(null);
+  const getEvents = () => (coords || CITY_OVERRIDE) ? fetcher(eventUrl).then((data) => {
+    setEvents(data);
+    setError(null);
+  }).catch(setError)
+  : console.log('Waiting for location...');
+
+  useEffect(() => {
+    getEvents(); // initial load
+    const interval = setInterval(getEvents, EVENT_RELOAD_MINUTES * 60 * 1000);
+
+    return () => clearInterval(interval); // avoid memory leak
+  }, [eventUrl, coords]);
 
   const { data: images } = useSWR('./backgrounds', fetcher);
 
