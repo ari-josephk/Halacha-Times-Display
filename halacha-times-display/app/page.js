@@ -7,6 +7,7 @@ import { Suspense, useState, useEffect } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
+import Clock from './clock';
 
 
 export default function Home() {
@@ -65,6 +66,7 @@ function App() {
   return (
     <div className={styles.app}>
       <Background images={images} reloadMinutes={RELOAD_MINUTES} />
+      <Clock/>
       <Sidebar dateMap={new Map(Object.entries(events))} />
     </div>
   );
