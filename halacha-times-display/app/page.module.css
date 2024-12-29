@@ -66,6 +66,7 @@
   list-style-type: none;
   padding: 0;
   padding-top: 128px;
+  scroll-margin-top: 128px; /* Ensure the top of the elements in the list are always visible */
 }
 
 .sidebar li {
