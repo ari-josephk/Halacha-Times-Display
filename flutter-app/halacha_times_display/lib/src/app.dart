@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'settings/settings_controller.dart';
 
@@ -84,10 +83,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-      ),
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Halacha Times Display'),
+        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -116,17 +115,19 @@ class MyApp extends StatelessWidget {
                   onChanged: (_) {},
                 ),
               ),
-              ListTile(
-                title: Text('Select Number'),
-                trailing: DropdownButton<int>(
-                  items: List<int>.generate(10, (int index) => index + 1)
-                      .map((int value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text(value.toString()),
-                    );
-                  }).toList(),
-                  onChanged: (_) {},
+                ListTile(
+                title: Text('Change Background Time (in minutes)'),
+                trailing: SizedBox(
+                  width: 50,
+                  child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    // Handle the change in background time
+                  },
+                  ),
                 ),
               ),
             ],
