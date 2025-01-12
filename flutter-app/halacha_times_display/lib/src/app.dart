@@ -82,6 +82,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int backgroundTime = 10;
+    String city = 'Jerusalem';
+
+    void reloadWebview() {
+      webViewController.loadRequest(Uri.parse(
+          'https://halacha-times-display.vercel.app/?city=$city&backgroundReloadMinutes=$backgroundTime'));
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -112,21 +120,25 @@ class MyApp extends StatelessWidget {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (_) {},
+                  onChanged: (value) {
+                    city = value!;
+                    reloadWebview();
+                  },
                 ),
               ),
-                ListTile(
+              ListTile(
                 title: Text('Change Background Time (in minutes)'),
                 trailing: SizedBox(
                   width: 50,
                   child: TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
-                    // Handle the change in background time
-                  },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      backgroundTime = int.parse(value);
+                      reloadWebview();
+                    },
                   ),
                 ),
               ),
