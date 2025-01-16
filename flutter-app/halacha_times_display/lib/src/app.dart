@@ -111,37 +111,51 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
+                ListTile(
                 title: Text('Select City'),
-                trailing: DropdownButton<String>(
-                  items: cities.map((String value) {
+                trailing: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                  return DropdownButton<String>(
+                    value: city,
+                    items: cities.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
-                  }).toList(),
-                  onChanged: (value) {
-                    city = value!;
+                    }).toList(),
+                    onChanged: (value) {
+                    setState(() {
+                      city = value!;
+                    });
                     reloadWebview();
+                    },
+                  );
                   },
                 ),
-              ),
-              ListTile(
+                ),
+                ListTile(
                 title: Text('Change Background Time (in minutes)'),
                 trailing: SizedBox(
                   width: 50,
-                  child: TextField(
+                  child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                    return TextField(
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                     ),
+                    controller: TextEditingController(text: backgroundTime.toString()),
                     onChanged: (value) {
+                      setState(() {
                       backgroundTime = int.parse(value);
+                      });
                       reloadWebview();
                     },
+                    );
+                  },
                   ),
                 ),
-              ),
+                ),
             ],
           ),
         ),
