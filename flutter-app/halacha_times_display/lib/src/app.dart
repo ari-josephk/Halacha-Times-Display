@@ -84,6 +84,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+
     int backgroundTime = 10;
     String city = 'Jerusalem';
 
