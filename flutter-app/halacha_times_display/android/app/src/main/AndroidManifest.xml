@@ -4,7 +4,7 @@
     <application
         android:label="Jewish Calendar"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/shabbat_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
