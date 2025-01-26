@@ -2,6 +2,7 @@
 A simple Google and Apple TV app that I made to display Jewish calendar times on any display. The web version can automatically detect your location if geolocation is enabled. 
 
 https://halacha-times-display.vercel.app/
+![image](https://github.com/user-attachments/assets/e45d345b-19ab-498a-9b36-d48172ab1cc0)
 
 ### Settings 
 Tap or press any button on the remote to enable the settings Menu
