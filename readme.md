@@ -14,3 +14,7 @@ Simply create a PR adding new images into the /images folder of the root directo
 - Must be high quality, HD or 4K images
 - Must be .jpg or .jpeg format
 - Appropriate and relevant
+
+### Install Guides
+#### Andriod TV
+https://www.howtogeek.com/694493/how-to-sideload-apps-on-google-tv/
