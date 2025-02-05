@@ -16,5 +16,6 @@ Simply create a PR adding new images into the /images folder of the root directo
 - Appropriate and relevant
 
 ### Install Guides
+Download the respective file from the *Releases* section and follow the guides below to install for your system. 
 #### Andriod TV
 https://www.howtogeek.com/694493/how-to-sideload-apps-on-google-tv/
