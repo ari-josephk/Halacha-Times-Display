@@ -3,7 +3,7 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
-import { Suspense } from "react"
+import { Suspense, useEffect, useState } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
@@ -29,7 +29,7 @@ const EVENT_RELOAD_MINUTES = 360; // 6 hours
 function App() {
   const params = useSearchParams();
   const CITY_OVERRIDE = params.get('city');
-  const RELOAD_MINUTES = params.get('backgroundReloadMinutes') || 10;
+  const RELOAD_MINUTES = Number(params.get('backgroundReloadMinutes')) || 10;
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated();
 
@@ -37,7 +37,17 @@ function App() {
   if (coords) eventUrl = `./events?lat=${coords.latitude}&lon=${coords.longitude}&city=${CITY_OVERRIDE}`;
   else eventUrl = `./events?city=${CITY_OVERRIDE}`;
 
-  const { data: events, error } = useSWR(eventUrl, fetcher);
+  let [events, setEvents] = useState({});
+  let [error, setError] = useState(null);
+  
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('This will be called every 2 seconds');
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const { data: images } = useSWR('./backgrounds', fetcher);
 
