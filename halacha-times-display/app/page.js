@@ -3,10 +3,11 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useEffect, useState, useState, useEffect } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
+import Clock from './clock';
 
 
 export default function Home() {
@@ -39,15 +40,18 @@ function App() {
 
   let [events, setEvents] = useState({});
   let [error, setError] = useState(null);
-  
+  const getEvents = () => (coords || CITY_OVERRIDE) ? fetcher(eventUrl).then((data) => {
+    setEvents(data);
+    setError(null);
+  }).catch(setError)
+  : console.log('Waiting for location...');
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('This will be called every 2 seconds');
-    }, 2000);
+    getEvents(); // initial load
+    const interval = setInterval(getEvents, EVENT_RELOAD_MINUTES * 60 * 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval); // avoid memory leak
+  }, [eventUrl, coords]);
 
   const { data: images } = useSWR('./backgrounds', fetcher);
 
@@ -62,6 +66,7 @@ function App() {
   return (
     <div className={styles.app}>
       <Background images={images} reloadMinutes={RELOAD_MINUTES} />
+      <Clock/>
       <Sidebar dateMap={new Map(Object.entries(events))} />
     </div>
   );
