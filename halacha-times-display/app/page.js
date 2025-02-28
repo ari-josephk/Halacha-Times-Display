@@ -3,7 +3,7 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
-import { Suspense, useEffect, useState, useState, useEffect } from "react"
+import { Suspense, useEffect, useState } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
