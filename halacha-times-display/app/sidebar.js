@@ -21,7 +21,14 @@ const Sidebar = ({ dateMap }) => {
                 <li className={styles.dateNotifier}>{d}</li>
                 {dateMap.get(d).map(e => (
                   <li className={styles.capsule} key={e.id}>
-                    <span>{e}</span>
+                    {typeof e.description === 'object' ? (
+                      <>
+                        <div className={styles.eventLine}>{e.description.en}</div>
+                        <div className={styles.eventLine} dir="rtl">{e.description.he}</div>
+                      </>
+                    ) : (
+                      <span className={styles.eventLine}>{e.description}</span>
+                    )}
                   </li>
                 ))}
               </Fragment>
