@@ -3,7 +3,7 @@
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 import { useGeolocated } from "react-geolocated";
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useEffect, useState } from "react"
 import styles from "./page.module.css";
 import Sidebar from './sidebar';
 import Background from "./background";
@@ -30,7 +30,7 @@ const EVENT_RELOAD_MINUTES = 360; // 6 hours
 function App() {
   const params = useSearchParams();
   const CITY_OVERRIDE = params.get('city');
-  const RELOAD_MINUTES = params.get('backgroundReloadMinutes') || 10;
+  const RELOAD_MINUTES = Number(params.get('backgroundReloadMinutes')) || 10;
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated();
 
